@@ -1,7 +1,6 @@
 version: '3.7'
 
 services:
-
   frontend:
     image: elk-frontend:latest
     container_name: elk-frontend
@@ -15,7 +14,7 @@ services:
       - ${FRONTEND_PORT}:3000
     networks:
       - elk
-      
+
 networks:
   elk:
     driver: bridge
