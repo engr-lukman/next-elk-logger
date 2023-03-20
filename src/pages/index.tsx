@@ -73,8 +73,7 @@ const Home: NextPage = () => {
 
 export default Home;
 
-// This function gets called at build time
-export async function getStaticProps() {
+export async function getServerSideProps() {
 
   logger.error(`A error message from next.js`);
 
