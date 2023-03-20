@@ -1,0 +1,7 @@
+.git
+.husky
+.next
+*Dockerfile*
+*docker-compose*
+node_modules
+.vscode
