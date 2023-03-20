@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+
+  frontend:
+    image: elk-frontend:latest
+    container_name: elk-frontend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${FRONTEND_PORT}:3000
+    networks:
+      - elk
+      
+networks:
+  elk:
+    driver: bridge

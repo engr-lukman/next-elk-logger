@@ -4,21 +4,6 @@
 version: '3.7'
 
 services:
-
-  frontend:
-    image: elk-frontend:latest
-    container_name: elk-frontend
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    restart: always
-    env_file:
-      - .env
-    ports:
-      - ${FRONTEND_PORT}:3000
-    networks:
-      - elk
-
   elasticsearch:
     image: elasticsearch:${ELK_VERSION}
     container_name: elasticsearch
@@ -34,8 +19,6 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-    depends_on:
-      - frontend
     stdin_open: true
     tty: true
     logging:
@@ -58,8 +41,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ./elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./elk/logstash.template.json:/usr/share/logstash/templates/logstash.template.json
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logstash.template.json:/usr/share/logstash/templates/logstash.template.json
     ports:
       - "5000:5000/tcp"
       - "5000:5000/udp"
@@ -115,8 +98,8 @@ services:
     volumes:
       - /var/run/docker.sock:/host_docker/docker.sock
       - /var/lib/docker:/host_docker/var/lib/docker
-      - ./logs:/usr/share/filebeat/logs
-      - ./elk/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ../client/logs:/usr/share/filebeat/logs
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
     command: [ "--strict.perms=false" ]
     ulimits:
       memlock:
